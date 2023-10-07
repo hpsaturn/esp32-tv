@@ -140,8 +140,10 @@ void VideoPlayer::framePlayerTask()
   uint8_t *jpegBuffer = NULL;
   size_t jpegBufferLength = 0;
   size_t jpegLength = 0;
+  #if CORE_DEBUG_LEVEL > 0
   // used for calculating frame rate
   std::list<int> frameTimes;
+  #endif
   while (true)
   {
     if (mState == VideoPlayerState::STOPPED || mState == VideoPlayerState::PAUSED)
@@ -187,11 +189,13 @@ void VideoPlayer::framePlayerTask()
       vTaskDelay(10 / portTICK_PERIOD_MS);
       continue;
     }
+    #if CORE_DEBUG_LEVEL > 0
     frameTimes.push_back(millis());
     // keep the frame rate elapsed time to 5 seconds
     while(frameTimes.size() > 0 && frameTimes.back() - frameTimes.front() > 5000) {
       frameTimes.pop_front();
     }
+    #endif
     mDisplay.startWrite();
     if (mJpeg.openRAM(jpegBuffer, jpegLength, _doDraw))
     {
