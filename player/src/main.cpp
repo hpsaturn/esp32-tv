@@ -16,11 +16,17 @@
 #include "PowerUtils.h"
 #include "Button.h"
 
-const char *WIFI_SSID = "CMGResearch";
-const char *WIFI_PASSWORD = "02087552867";
-const char *FRAME_URL = "http://192.168.1.229:8123/frame";
-const char *AUDIO_URL = "http://192.168.1.229:8123/audio";
-const char *CHANNEL_INFO_URL = "http://192.168.1.229:8123/channel_info";
+#define concat(str1, str2) str1 str2
+#define frame_endpoint "frame"
+#define audio_endpoint "audio"
+#define channel_endpoint "channel_info"
+
+const char *WIFI_SSID = wifi_ssid;
+const char *WIFI_PASSWORD = wifi_passw;
+
+const char *FRAME_URL = concat(esp32tv_server, frame_endpoint);
+const char *AUDIO_URL = concat(esp32tv_server, audio_endpoint);
+const char *CHANNEL_INFO_URL = concat(esp32tv_server, channel_endpoint);
 
 #ifdef HAS_IR_REMOTE
 RemoteInput *remoteInput = NULL;
